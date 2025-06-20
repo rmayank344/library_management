@@ -1,6 +1,6 @@
 const express = require('express');
 const router = new express.Router();
-const { add_book, all_book, edit_book } = require('../controller/admin_cntrll');
+const { add_book, all_book, edit_book } = require('../controller/admin_role_cntrll');
 
 const {token_validate} = require("../middleware/token_validate");
 

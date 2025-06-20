@@ -12,7 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/user", require("./routes/user_register_routes"));
 
 //Admin Role routes
-app.use("/api/admin", require("./routes/admin_routes"));
+app.use("/api/admin_role", require("./routes/admin_role_routes"));
+
+//User Role Routes
+app.use("/api/user_role", require("./routes/user_role_routes"));
 
 
 app.listen(process.env.PORT, () => {
