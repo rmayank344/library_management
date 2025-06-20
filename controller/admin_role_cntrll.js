@@ -32,7 +32,10 @@ const add_book = async (req, res) => {
 // Show All Available Book
 const all_book = async (req, res) => {
   try {
-    const books = await BookModel.findAll({ raw: true });
+    const books = await BookModel.findAll({
+      where: { quantity: { [Op.gt]: 0 } },
+      raw: true
+    });
     return res.status(200).json({
       success: true,
       book: books
