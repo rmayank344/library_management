@@ -97,5 +97,94 @@ const edit_book = async (req, res) => {
   }
 };
 
+// Admin can see borrowed and returned book by user
+const admin_dashboard = async (req, res) => {
+  try {
+    // If status == borrowed then it will show only borrowed book otherwise returned book
+    const { status } = req.query;
+    if (req.role == 'admin') {
+      const book_status = await TransactionModel.findAll({
+        where: { status: status },
+        raw: true,
+      });
 
-module.exports = { add_book, all_book, edit_book };
+      const uniqueUserIds = [...new Set(book_status.map(item => item.userId))];
+
+      const user_detail = await USER_MODEL.findAll({
+        where: {
+          id: uniqueUserIds
+        },
+        attributes: ['id', 'name'],
+        raw: true,
+      });
+
+      const user_map = new Map();
+      user_detail.forEach(user => {
+        user_map.set(user.id, user.name);
+      });
+
+      const bookId = book_status.map(item => item.bookId);
+
+      const book_detail = await BookModel.findAll({
+        where: {
+          id: bookId,
+        },
+        attributes: ['id', 'title', 'author'],
+        raw: true,
+      });
+
+      const book_map = new Map();
+      book_detail.forEach(book => {
+        book_map.set(book.id, {
+          title: book.title,
+          author: book.author,
+        });
+      });
+
+      const userBookMap = new Map();
+
+      book_status.forEach(entry => {
+        const userId = entry.userId;
+
+        const book_data = {
+          book_id: entry.bookId,
+          title: book_map.get(entry.bookId)?.title,
+          author: book_map.get(entry.bookId)?.author,
+          status: entry.status
+        };
+
+        if (!userBookMap.has(userId)) {
+          userBookMap.set(userId, {
+            userId: userId,
+            user_name: user_map.get(userId),
+            books: [book_data]
+          });
+        }
+        else {
+          userBookMap.get(userId).books.push(book_data);
+        }
+      });
+
+
+      const finalResult = Array.from(userBookMap.values());
+      return res.status(200).json({
+        success: true,
+        data: finalResult,
+      });
+    }
+    else {
+      return res.status(400).json({
+        success: false,
+        message: "You are not authorized to show book status."
+      });
+    }
+  }
+  catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err
+    });
+  }
+};
+
+module.exports = { add_book, all_book, edit_book, admin_dashboard };

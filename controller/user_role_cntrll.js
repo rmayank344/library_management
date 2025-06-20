@@ -15,7 +15,9 @@ const borrowed_book = async (req, res) => {
       });
     }
 
-    const total_borrowed_book = await TransactionModel.count({ where: { userId: userId }, raw: true, });
+    const total_borrowed_book = await TransactionModel.count({ 
+      where: { userId: userId, status: "borrowed" }, 
+      raw: true, });
 
     if (total_borrowed_book == 5) {
       return res.status(400).json({
@@ -81,6 +83,13 @@ const get_borrowed_book = async (req, res) => {
         where: { userId: userId, status: "borrowed" },
         raw: true,
       });
+    
+      if (all_borrowed_book.length == 0) {
+        return res.status(400).json({
+          success: false,
+          message: "You have not borrowed any book"
+        });
+      }
     const user_name = await USER_MODEL.findOne({ where: { id: userId }, raw: true });
 
     const bookIds = all_borrowed_book.map(book => book.bookId);
@@ -118,5 +127,55 @@ const get_borrowed_book = async (req, res) => {
   }
 };
 
+//User can returned the book
+const returned_book = async (req, res) => {
+  const userId = req.id;
+  try {
+    const { bookId, status } = req.body;
 
-module.exports = { borrowed_book, get_borrowed_book };
+    const borrowed_book = await TransactionModel.findOne({
+      where: { userId: userId, bookId: bookId, status: "borrowed" },
+      raw: true
+    });
+
+    if (!borrowed_book) {
+      return res.status(400).json({
+        success: false,
+        message: "You have not borrowed this book"
+      });
+    }
+    await TransactionModel.update(
+      { status: status },
+      {
+        where: {
+          userId: userId,
+          bookId: bookId,
+          status: "borrowed"
+        },
+      });
+
+      const book = await BookModel.findOne({where: {id: bookId}, raw: true});
+
+    await BookModel.update(
+      { quantity: book.quantity + 1 },
+      {
+        where: {
+          id: bookId
+        }
+      });
+
+    return res.status(200).json({
+      success: true,
+      message: "Book returned successfully"
+    });
+  }
+  catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err
+    });
+  }
+};
+
+
+module.exports = { borrowed_book, get_borrowed_book, returned_book };
