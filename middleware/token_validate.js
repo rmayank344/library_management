@@ -35,4 +35,19 @@ const token_validate = async (req, res, next) => {
   }
 };
 
-module.exports = { token_validate };
+const isAdmin = async (req, res, next) => {
+  try {
+    if (req.role !== 'admin') {
+      return res.status(403).json({ message: "Access denied. Admins only." });
+    }
+    next();
+  }
+  catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err
+    });
+  }
+};
+
+module.exports = { token_validate, isAdmin };

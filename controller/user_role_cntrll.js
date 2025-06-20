@@ -1,12 +1,13 @@
 const BookModel = require('../models/book_model');
 const TransactionModel = require('../models/transaction_model');
 const USER_MODEL = require('../models/user_model');
+const { Op } = require("sequelize");
 
 // User Borrowed Book API
 const borrowed_book = async (req, res) => {
   try {
     const userId = req.id;
-    const { bookId, status } = req.body;
+    const { bookId } = req.body;
 
     if (req.role == 'admin') {
       return res.status(403).json({
@@ -15,9 +16,10 @@ const borrowed_book = async (req, res) => {
       });
     }
 
-    const total_borrowed_book = await TransactionModel.count({ 
-      where: { userId: userId, status: "borrowed" }, 
-      raw: true, });
+    const total_borrowed_book = await TransactionModel.count({
+      where: { userId: userId, status: "borrowed" },
+      raw: true,
+    });
 
     if (total_borrowed_book == 5) {
       return res.status(400).json({
@@ -27,7 +29,15 @@ const borrowed_book = async (req, res) => {
     }
 
     const already_borrowed_book = await TransactionModel.findOne({
-      where: { userId: userId, bookId: bookId }, raw: true
+      where:
+      {
+        userId: userId,
+        bookId: bookId,
+        status: {
+          [Op.ne]: "returned"
+        }
+      },
+      raw: true
     });
 
     if (already_borrowed_book) {
@@ -49,7 +59,7 @@ const borrowed_book = async (req, res) => {
     const transaction_book = await TransactionModel.create({
       userId: userId,
       bookId: bookId,
-      status: status
+      status: "borrowed"
     });
 
     await BookModel.update(
@@ -83,13 +93,13 @@ const get_borrowed_book = async (req, res) => {
         where: { userId: userId, status: "borrowed" },
         raw: true,
       });
-    
-      if (all_borrowed_book.length == 0) {
-        return res.status(400).json({
-          success: false,
-          message: "You have not borrowed any book"
-        });
-      }
+
+    if (all_borrowed_book.length == 0) {
+      return res.status(400).json({
+        success: false,
+        message: "You have not borrowed any book"
+      });
+    }
     const user_name = await USER_MODEL.findOne({ where: { id: userId }, raw: true });
 
     const bookIds = all_borrowed_book.map(book => book.bookId);
@@ -131,7 +141,7 @@ const get_borrowed_book = async (req, res) => {
 const returned_book = async (req, res) => {
   const userId = req.id;
   try {
-    const { bookId, status } = req.body;
+    const { bookId } = req.body;
 
     const borrowed_book = await TransactionModel.findOne({
       where: { userId: userId, bookId: bookId, status: "borrowed" },
@@ -145,7 +155,7 @@ const returned_book = async (req, res) => {
       });
     }
     await TransactionModel.update(
-      { status: status },
+      {  status: "returned" },
       {
         where: {
           userId: userId,
@@ -154,7 +164,7 @@ const returned_book = async (req, res) => {
         },
       });
 
-      const book = await BookModel.findOne({where: {id: bookId}, raw: true});
+    const book = await BookModel.findOne({ where: { id: bookId }, raw: true });
 
     await BookModel.update(
       { quantity: book.quantity + 1 },
