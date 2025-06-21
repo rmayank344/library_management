@@ -4,6 +4,7 @@ const USER_MODEL = require('../models/user_model');
 const { Op } = require("sequelize");
 
 // User Borrowed Book API
+// Endpoint: http://localhost:4001/api/user_role/borrowed_book
 const borrowed_book = async (req, res) => {
   try {
     const userId = req.id;
@@ -85,6 +86,7 @@ const borrowed_book = async (req, res) => {
 };
 
 // User can see their Borrowed Book API
+// Endpoint: http://localhost:4001/api/user_role/get_borrowed_book
 const get_borrowed_book = async (req, res) => {
   const userId = req.id;
   try {
@@ -138,6 +140,7 @@ const get_borrowed_book = async (req, res) => {
 };
 
 //User can returned the book
+// Endpoint: http://localhost:4001/api/user_role/returned_book
 const returned_book = async (req, res) => {
   const userId = req.id;
   try {

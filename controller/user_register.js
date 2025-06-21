@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 // User Registration API
+// Endpoint: http://localhost:4001/api/user/register
 const user_registration = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -45,6 +46,7 @@ const user_registration = async (req, res) => {
 };
 
 //User Login API
+// Endpoint: http://localhost:4001/api/user/login
 const user_login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -96,6 +98,7 @@ const user_login = async (req, res) => {
 };
 
 //User or Admin Can Edit Profile
+// Endpoint: http://localhost:4001/api/user/edit_profile
 const edit_profile = async (req, res) => {
   try {
     const { name, newEmail, newPassword, oldEmail, oldPassword, role } = req.body;

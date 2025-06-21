@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+// Verifying Auth Token
 const token_validate = async (req, res, next) => {
   try {
     const auth_token = req.header('x-auth-key');
@@ -35,6 +36,7 @@ const token_validate = async (req, res, next) => {
   }
 };
 
+// Verifying User is a admin or not
 const isAdmin = async (req, res, next) => {
   try {
     if (req.role !== 'admin') {

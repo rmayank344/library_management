@@ -3,6 +3,7 @@ const BookModel = require('../models/book_model');
 const TransactionModel = require('../models/transaction_model');
 
 // Admin Adding Book
+// Endpoint: http://localhost:4001/api/admin_role/add_book
 const add_book = async (req, res) => {
   try {
     const { title, author, quantity } = req.body;
@@ -30,6 +31,7 @@ const add_book = async (req, res) => {
 };
 
 // Show All Available Book
+// Endpoint: http://localhost:4001/api/admin_role/all_book
 const all_book = async (req, res) => {
   try {
     const books = await BookModel.findAll({
@@ -50,6 +52,7 @@ const all_book = async (req, res) => {
 }
 
 //Admin can Edit Quantity of Book
+// Endpoint: http://localhost:4001/api/admin_role/edit_book
 const edit_book = async (req, res) => {
   try {
     const { id, quantity } = req.body;
@@ -85,6 +88,7 @@ const edit_book = async (req, res) => {
 };
 
 // Admin can see borrowed and returned book by user
+// Endpoint: http://localhost:4001/api/admin_role/book_status
 const admin_dashboard = async (req, res) => {
   try {
     // If status == borrowed then it will show only borrowed book otherwise returned book
@@ -167,6 +171,7 @@ const admin_dashboard = async (req, res) => {
 };
 
 // Admin can show all user detail
+// Endpoint: http://localhost:4001/api/admin_role/all_users
 const all_user_details = async (req, res) => {
   try {
     const { id } = req.query;
