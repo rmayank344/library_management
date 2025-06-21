@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "73eebd23-e732-428f-bbd3-1e507e3dac63",
+		"name": "Library Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32903107"
+	},
+	"item": [
+		{
+			"name": "User Register",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Priya\",\r\n    \"email\":\"priya@gmail.com\",\r\n    \"password\":\"Priya@123\",\r\n    \"role\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNDIxMDI1LCJleHAiOjE3NTA1MDc0MjV9.w0zatYk6Gk7J3PvoQSFPfDekBV6f2njNAdn3uZeA1OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"name\":\"Priya\",\r\n    // \"oldEmail\":\"priya@gmail.com\",\r\n    // \"oldPassword\":\"Priya123\",\r\n    // \"newPassword\" : \"Priya@123\"\r\n    // \"newEmail\":\"priya@gmail.com\"\r\n    // \"role\":\"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user/edit_profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user",
+								"edit_profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"priya@gmail.com\",\r\n    \"password\":\"Priya@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Role",
+			"item": [
+				{
+					"name": "Add Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNDIxMDI1LCJleHAiOjE3NTA1MDc0MjV9.w0zatYk6Gk7J3PvoQSFPfDekBV6f2njNAdn3uZeA1OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Mathematice\",\r\n    \"author\":\"Ramanujan\",\r\n    \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/admin_role/add_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"admin_role",
+								"add_book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show All Returned/Borrowed Book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNDIxMDI1LCJleHAiOjE3NTA1MDc0MjV9.w0zatYk6Gk7J3PvoQSFPfDekBV6f2njNAdn3uZeA1OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/admin_role/book_status?status=borrowed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"admin_role",
+								"book_status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "borrowed"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNDIxMDI1LCJleHAiOjE3NTA1MDc0MjV9.w0zatYk6Gk7J3PvoQSFPfDekBV6f2njNAdn3uZeA1OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/admin_role/edit_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"admin_role",
+								"edit_book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Book Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4001/api/admin_role/all_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"admin_role",
+								"all_book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All User Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNDIxMDI1LCJleHAiOjE3NTA1MDc0MjV9.w0zatYk6Gk7J3PvoQSFPfDekBV6f2njNAdn3uZeA1OI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4001/api/admin_role/all_users?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"admin_role",
+								"all_users"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Role",
+			"item": [
+				{
+					"name": "Borrowed Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA0MzA4NDMsImV4cCI6MTc1MDUxNzI0M30.oSfOysKZ9WXxWAgsGEeLIftDrzj1JGwCxsLckiOhhJU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 30,\r\n    \"status\": \"borrowed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user_role/borrowed_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user_role",
+								"borrowed_book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return Borrowed Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA0MzA4NDMsImV4cCI6MTc1MDUxNzI0M30.oSfOysKZ9WXxWAgsGEeLIftDrzj1JGwCxsLckiOhhJU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 30,\r\n    \"status\": \"returned\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user_role/returned_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user_role",
+								"returned_book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Borrowed Book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA0MzA4NDMsImV4cCI6MTc1MDUxNzI0M30.oSfOysKZ9WXxWAgsGEeLIftDrzj1JGwCxsLckiOhhJU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4001/api/user_role/get_borrowed_book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4001",
+							"path": [
+								"api",
+								"user_role",
+								"get_borrowed_book"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
