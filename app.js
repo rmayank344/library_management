@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const os = require('os');
 require('dotenv').config();
 require('./DB/sql_conn');
 
@@ -19,6 +20,13 @@ app.get('/api/admin_role/health', (req, res) => {
 // Add Health Check Route for Target Group user-role (/api/user_role/health)
 app.get('/api/user_role/health', (req, res) => {
   res.status(200).send('User Role Service Healthy');
+});
+
+
+
+app.use((req, res, next) => {
+  console.log(`Received request on instance: ${os.hostname()} for ${req.url}`);
+  next();
 });
 
 
